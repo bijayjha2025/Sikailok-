@@ -43,8 +43,8 @@ function App() {
   if (Page) return <Page onBack={() => navigate('/')} />
 
   return (
-    <main className="campus-page">
-      <iframe title="Sikailok Academy campus" src="/Campus.html" className="campus-frame" />
+    <main className="min-h-screen p-3">
+      <iframe title="Sikailok Academy campus" src="/Campus.html" className="block w-full min-h-[calc(100vh-24px)] border-0" />
     </main>
   )
 }
