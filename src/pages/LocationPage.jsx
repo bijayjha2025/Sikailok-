@@ -1,16 +1,28 @@
-function LocationPage({ title, description, quest, onBack }) {
+import PixelScene from './PixelScene'
+
+function LocationPage({ title, description, quest, scene, onBack }) {
   return (
-   <main className="min-h-screen bg-linear-to-br from-[#e8f1fb] to-[#fff8df] p-4 sm:p-6">
-    <button className="game-button" onClick={onBack}>← Back to campus</button>
-     <section className="mx-auto mt-[8vh] max-w-[720px] rounded-lg border-3 border-[#1c2b4a] bg-white p-6 shadow-[5px_5px_0_#1c2b4a] sm:mt-[12vh] sm:p-9 sm:shadow-[8px_8px_0_#1c2b4a]">
-      <p className="m-0 font-bold uppercase tracking-[0.12em] text-[#b4513a]">Sikailok Academy</p>
-      <h1 className="my-2 mb-4 text-[clamp(2rem,6vw,4rem)]">{title}</h1>
-      <p className="text-[1.15rem] leading-[1.6]">{description}</p>
-      <div className="my-7 grid gap-1.5 border-l-5 border-[#ffd23f] bg-[#fff8df] p-4">
-       <strong>Current quest</strong>
-       <span>{quest}</span>
+   <main className="pixel-page">
+    <header className="pixel-page-header">
+     <button className="game-button" type="button" onClick={onBack}>← Back to campus</button>
+     <p className="pixel-kicker hidden sm:block">Sikailok Academy / Stage 01</p>
+    </header>
+     <section className="pixel-page-content max-w-[1000px]">
+      <PixelScene title={title} scene={scene} />
+      <div className="pixel-panel mt-4 grid gap-5 p-4 sm:p-6 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+       <div className="grid gap-3">
+        <p className="pixel-kicker">Sikailok Academy / Location</p>
+        <h1 className="pixel-title m-0">{title}</h1>
+        <p className="pixel-info m-0">{description}</p>
+       </div>
+       <div>
+        <div className="pixel-quest my-0">
+         <strong>Current quest</strong>
+         <span>{quest}</span>
+        </div>
+        <button className="game-button-primary mt-4" type="button" onClick={() => window.alert('Quest starting soon!')}>Start quest</button>
+       </div>
       </div>
-      <button className="game-button-primary" onClick={() => window.alert('Quest starting soon!')}>Start quest</button>
      </section>
    </main>
   )
