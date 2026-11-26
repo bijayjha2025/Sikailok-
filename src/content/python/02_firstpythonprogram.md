@@ -1,7 +1,10 @@
-
 # Our First Python Program
 ```python
 print("Hello, from Python")
+```
+Output:
+```text
+Hello, from Python
 ```
 
 In this program:
@@ -9,7 +12,7 @@ In this program:
 - Built-in function: print() is a built-in function that is used to display output. (Will study this later on)
 - String: "Hello, from Python" is a string. The text enclosed within quotation mark is displayed as output.
 
-** Note: The quotation marks are not displayed in the output. They indicate that the enclosed text is a string. **
+> Note: The quotation marks are not displayed in the output. They indicate that the enclosed text is a string.
 
 ## Comments in Python	
 Comments are used to explain code and make it easier to understand. Comments are ignored during execution, so they do not affect the program’s output and it will not be displayed. Two common ways to comment: single-line comments and multiline comments.
@@ -26,5 +29,9 @@ print("Hello") #This is multiline comment
 # is
 # ignored
 ```
+Output:
+```text
+Hello
+```
 
-PS: Triple quotation marks create a string, not an actual comment. The string is not displayed unless we use print(). When used at the beginning of a function, class, or module, it can serve as documentation called a docstring.
+>> Triple quotation marks create a string, not an actual comment. The string is not displayed unless we use print(). When used at the beginning of a function, class, or module, it can serve as documentation called a docstring.
