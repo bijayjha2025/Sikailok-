@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import PixelScene from './PixelScene'
 
 const defaultProfile = {name: '', className: '', goal: '', }
 
@@ -75,28 +76,32 @@ function MainSchool({ onBack }) {
   const hasSavedProfile = Boolean(savedProfile.name && savedProfile.className)
 
   return (
-   <main className="min-h-screen bg-linear-to-br from-[#edf4fb] to-[#fff8df] p-4 sm:p-6">
-    <header className="mx-auto flex max-w-[980px] items-center justify-between gap-4">
+   <main className="pixel-page">
+    <header className="pixel-page-header">
      <button className="game-button" type="button" onClick={onBack}><span aria-hidden="true">←</span> Back to campus</button>
-     <p className="hidden text-[0.86rem] font-bold text-[#52627d] sm:block">Sikailok Academy / Main School</p>
+     <p className="pixel-kicker hidden sm:block">Sikailok Academy / Stage 01</p>
     </header>
 
-    <section className="mx-auto mt-5 grid max-w-[980px] items-start gap-7 md:mt-9 md:grid-cols-[minmax(240px,0.8fr)_minmax(380px,1.2fr)]">
-     <div className="py-2 md:px-3 md:py-6">
-      <p className="m-0 font-bold uppercase tracking-[0.12em] text-[#b4513a]">Student profile</p>
-      <h1 className="my-2 mb-4 text-[clamp(2.6rem,7vw,4.8rem)] leading-none">Main School</h1>
-      <p className="m-0 max-w-[390px] text-[1.08rem] leading-[1.65]">Tell us a little about yourself so we can shape your learning journey and keep track of your progress.</p>
-      {hasSavedProfile && (
-       <div className="mt-6 grid gap-1.5 border-l-5 border-[#4f9e56] bg-[#f4faef] px-4 py-3.5">
-        <strong>Welcome back, {savedProfile.name}!</strong>
-        <span className="text-[0.88rem] leading-[1.45] text-[#52627d]">Class {savedProfile.className}{savedProfile.goal ? ` · Goal: ${savedProfile.goal}` : ''}</span>
+    <section className="pixel-page-content grid max-w-[1000px] gap-4">
+     <PixelScene title="Main School" scene="main-school" />
+     <div className="grid items-start gap-5 md:grid-cols-[minmax(220px,0.8fr)_minmax(380px,1.2fr)] md:gap-6">
+      <div className="grid gap-3">
+       <div className="pixel-panel p-4">
+        <p className="pixel-kicker">Student profile</p>
+        <h1 className="pixel-title">Main School</h1>
+        <p className="pixel-info m-0">Set up your profile to save your class and learning goal.</p>
        </div>
-      )}
-     </div>
+       {hasSavedProfile && (
+        <div className="pixel-info grid gap-1.5 border-l-5 border-l-[#4f9e56] bg-[#f4faef]">
+         <strong>Welcome back, {savedProfile.name}!</strong>
+         <span className="text-[0.88rem] leading-[1.45] text-[#52627d]">Class {savedProfile.className}{savedProfile.goal ? ` · Goal: ${savedProfile.goal}` : ''}</span>
+        </div>
+       )}
+      </div>
 
-     <form className="grid gap-[18px] rounded-lg border-3 border-[#1c2b4a] bg-white p-5 shadow-[5px_5px_0_#1c2b4a] sm:p-7 sm:shadow-[8px_8px_0_#1c2b4a]" onSubmit={saveProfile}>
+     <form className="pixel-panel grid gap-[18px] p-4 sm:p-6" onSubmit={saveProfile}>
       <div className="flex items-center gap-4 border-b border-[#d7deea] pb-5">
-       <div className="grid size-[86px] flex-none place-items-center overflow-hidden rounded-full border-3 border-[#1c2b4a] bg-[#ffd23f] text-[1.6rem] font-extrabold" aria-label="Profile photo preview">
+       <div className="grid size-[86px] flex-none place-items-center overflow-hidden rounded-[3px] border-3 border-[#1c2b4a] bg-[#ffd23f] text-[1.6rem] font-extrabold" aria-label="Profile photo preview">
        {photoUrl ? (
         <img className="size-full object-cover" src={photoUrl} alt="Selected profile" />
         ) : (
@@ -118,12 +123,12 @@ function MainSchool({ onBack }) {
 
       <div className="grid gap-[7px]">
        <label className="font-extrabold" htmlFor="student-name">Full name</label>
-       <input className="w-full rounded border-2 border-[#1c2b4a] bg-white px-3 py-[11px] text-[#1c2b4a] outline-none focus:border-[#1c2b4a] focus:ring-3 focus:ring-[#ffd23f]/70" id="student-name" name="name" type="text" value={profile.name} onChange={updateProfile} placeholder="Enter your name" autoComplete="name" required />
+       <input className="pixel-field" id="student-name" name="name" type="text" value={profile.name} onChange={updateProfile} placeholder="Enter your name" autoComplete="name" required />
       </div>
 
       <div className="grid gap-[7px]">
        <label className="font-extrabold" htmlFor="student-class">Class</label>
-       <select className="w-full rounded border-2 border-[#1c2b4a] bg-white px-3 py-[11px] text-[#1c2b4a] outline-none focus:border-[#1c2b4a] focus:ring-3 focus:ring-[#ffd23f]/70" id="student-class" name="className" value={profile.className} onChange={updateProfile} required>
+       <select className="pixel-field" id="student-class" name="className" value={profile.className} onChange={updateProfile} required>
         <option value="">Select your class</option>
         <option value="7">Class 7</option>
         <option value="8">Class 8</option>
@@ -134,7 +139,7 @@ function MainSchool({ onBack }) {
       
       <div className="grid gap-[7px]">
        <label className="font-extrabold" htmlFor="student-goal">Your goal</label>
-       <textarea className="min-h-[100px] w-full resize-y rounded border-2 border-[#1c2b4a] bg-white px-3 py-[11px] text-[#1c2b4a] outline-none focus:border-[#1c2b4a] focus:ring-3 focus:ring-[#ffd23f]/70" id="student-goal" name="goal" value={profile.goal} onChange={updateProfile} placeholder="What do you want to achieve on this platform?" rows="4" />
+       <textarea className="pixel-field min-h-[100px] resize-y" id="student-goal" name="goal" value={profile.goal} onChange={updateProfile} placeholder="What do you want to achieve on this platform?" rows="4" />
        <small className="text-[#52627d]">Example: improve my coding skills</small>
       </div>
 
@@ -143,6 +148,7 @@ function MainSchool({ onBack }) {
        <p className="m-0 text-[0.88rem] font-extrabold text-[#397c40]" role="status">{status}</p>
         )}
      </form>
+     </div>
     </section>
    </main>
   )
