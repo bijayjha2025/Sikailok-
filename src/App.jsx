@@ -3,7 +3,7 @@ import './index.css'
 import AchievementHall from './pages/AchievementHall'
 import ComputerLab from './pages/ComputerLab'
 import ExaminationHall from './pages/ExaminationHall'
-import Library from './pages/Library'
+import Library from './pages/LibraryPage'
 import MainSchool from './pages/MainSchool'
 import Playground from './pages/Playground'
 
@@ -39,8 +39,21 @@ function App() {
     }
   }, [])
 
-  const Page = routes[path]
-  if (Page) return <Page onBack={() => navigate('/')} />
+  const libraryRoute = path.match(
+    /^\/library\/(html|css|python|sql)(?:\/(chapter\d+)\/([a-z0-9-]+)|\/([a-z0-9-]+))?\/?$/,
+  )
+  const Page = routes[path] || (libraryRoute ? Library : null)
+  if (Page) {
+    return (
+     <Page
+       onBack={() => navigate('/')}
+       onNavigate={navigate}
+       subject={libraryRoute ? libraryRoute[1] : null}
+       chapterSlug={libraryRoute ? libraryRoute[2] : null}
+       lessonSlug={libraryRoute ? libraryRoute[3] || libraryRoute[4] : null}
+     />
+    )
+  }
 
   return (
     <main className="min-h-screen p-3">
