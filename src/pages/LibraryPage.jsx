@@ -9,7 +9,7 @@ const subjects = [
   { id: 'sql', title: 'SQL' },
 ]
 
-const markdownNotes = import.meta.glob('../content/*/chapter*/*.md', {
+const markdownNotes = import.meta.glob('../content/**/*.md', {
   eager: true,
   query: '?raw',
   import: 'default',
@@ -20,10 +20,10 @@ function slugify(value) {
 }
 
 const fileNotes = Object.entries(markdownNotes).flatMap(([path, content]) => {
-  const match = path.match(/^\.\.\/content\/([^/]+)\/(chapter\d+)\/([^/]+)\.md$/i)
+  const match = path.match(/^\.\.\/content\/([^/]+)\/(?:(chapter\d+)\/)?([^/]+)\.md$/i)
   if (!match) return []
 
-  const [, subjectId, chapterSlug, fileName] = match
+  const [, subjectId, chapterSlug = '', fileName] = match
   if (!subjects.some((subject) => subject.id === subjectId)) return []
 
   const title = content.match(/^#\s*(.+)$/m)?.[1]?.trim()
@@ -39,7 +39,7 @@ const fileNotes = Object.entries(markdownNotes).flatMap(([path, content]) => {
     subjectId,
     chapterSlug: chapterSlug.toLowerCase(),
     chapterNumber,
-    chapterTitle: `Chapter ${chapterNumber}`,
+    chapterTitle: chapterSlug ? `Chapter ${chapterNumber}` : 'Lessons',
     fileName,
     title,
     slug,
@@ -50,9 +50,11 @@ const fileNotes = Object.entries(markdownNotes).flatMap(([path, content]) => {
 const lessons = fileNotes
   .map((lesson) => ({
     ...lesson,
-    route: lesson.subjectId === 'html' && lesson.slug === 'introduction-to-html'
-      ? `/library/${lesson.subjectId}/${lesson.slug}`
-      : `/library/${lesson.subjectId}/${lesson.chapterSlug}/${lesson.slug}`,
+    route: lesson.chapterSlug
+      ? lesson.subjectId === 'html' && lesson.slug === 'introduction-to-html'
+        ? `/library/${lesson.subjectId}/${lesson.slug}`
+        : `/library/${lesson.subjectId}/${lesson.chapterSlug}/${lesson.slug}`
+      : `/library/${lesson.subjectId}/${lesson.slug}`,
   }))
   .sort((a, b) => a.subjectId.localeCompare(b.subjectId)
     || a.chapterNumber - b.chapterNumber
@@ -175,7 +177,7 @@ function LibraryPage({ onBack, onNavigate, subject, chapterSlug, lessonSlug }) {
                 const chapterLessons = subjectLessons.filter((lesson) => lesson.chapterSlug === chapter)
 
                 return (
-                  <section key={chapter} className="grid gap-3">
+                  <section key={chapter || 'lessons'} className="grid gap-3">
                     <h2 className="m-0 text-xl font-extrabold">
                       {chapterLessons[0].chapterTitle}
                       {chapterLessons[0].chapterNumber === 1 ? ': Getting Started' : ''}
