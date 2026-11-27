@@ -5,9 +5,9 @@ import { useQuestionFilters } from '../hooks/useQuestionFilters.js'
 import { useEditorState } from '../hooks/useEditorState.js'
 import { useCodeRunner } from '../hooks/useCodeRunner.js'
 
-import QuestionFilters from '../components/examinationHall/QuestionFilters.jsx'
+import QuestionFilters from '../components/examinationHall/QuestionFilter.jsx'
 import QuestionList from '../components/examinationHall/QuestionList.jsx'
-import QuestionPanel from '../components/examinationHall/QuestionPanel.jsx'
+import QuestionPanel from '../components/examinationHall/QuestionPanels.jsx'
 import CodeRunnerPanel from '../components/examinationHall/CodeRunnerPanel.jsx'
 
 function ExaminationHall({ onBack }) {
