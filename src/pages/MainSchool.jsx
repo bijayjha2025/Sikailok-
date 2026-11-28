@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import PixelScene from './PixelScene'
 
-const defaultProfile = {name: '', className: '', goal: '', }
+const defaultProfile = {name: '', school:'', className: '', goal: '', }
 
 function getInitialProfile() {
   try {
@@ -51,10 +51,16 @@ function MainSchool({ onBack }) {
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
+  const updateSchool = (event) => {
+    const { value } = event.target
+    setProfile((current) => ({ ...current, school: value }))
+  }
+
   const saveProfile = (event) => {
     event.preventDefault()
     const cleanedProfile = {
       name: profile.name.trim(),
+      school: profile.school.trim(),
       className: profile.className,
       goal: profile.goal.trim(),
     }
@@ -73,7 +79,7 @@ function MainSchool({ onBack }) {
     .map((namePart) => namePart[0].toUpperCase())
     .join('')
 
-  const hasSavedProfile = Boolean(savedProfile.name && savedProfile.className)
+  const hasSavedProfile = Boolean(savedProfile.name && savedProfile.school && savedProfile.className)
 
   return (
    <main className="pixel-page">
@@ -93,7 +99,7 @@ function MainSchool({ onBack }) {
        </div>
        {hasSavedProfile && (
         <div className="pixel-info grid gap-1.5 border-l-5 border-l-[#4f9e56] bg-[#f4faef]">
-         <strong>Welcome back, {savedProfile.name}!</strong>
+         <strong>Welcome back, {savedProfile.name}! from {savedProfile.school}</strong>
          <span className="text-[0.88rem] leading-[1.45] text-[#52627d]">Class {savedProfile.className}{savedProfile.goal ? ` · Goal: ${savedProfile.goal}` : ''}</span>
         </div>
        )}
@@ -124,6 +130,12 @@ function MainSchool({ onBack }) {
       <div className="grid gap-[7px]">
        <label className="font-extrabold" htmlFor="student-name">Full name</label>
        <input className="pixel-field" id="student-name" name="name" type="text" value={profile.name} onChange={updateProfile} placeholder="Enter your name" autoComplete="name" required />
+      </div>
+
+      <div className="grid gap-[7px]">
+       <label className='font-extrabold' htmlFor='student-school'>School</label>
+       <input className='pixel-field' id='student-school' name='school' value={profile.school} onChange={updateSchool} placeholder='Enter your school name' />
+       <small className='text-[#52627d]'>Example: Sikailok Academy</small>
       </div>
 
       <div className="grid gap-[7px]">
